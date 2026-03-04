@@ -27,7 +27,7 @@ function Test-MtEidscaAS04 {
     }
     $result = Invoke-MtGraphRequest -RelativeUri "policies/authenticationMethodsPolicy/authenticationMethodConfigurations('Sms')" -ApiVersion beta
 
-    [string]$tenantValue = $result.includeTargets.isUsableForSignIn
+    [string]$tenantValue = (@($result.includeTargets.isUsableForSignIn) | Select-Object -Unique)
     $testResult = $tenantValue -eq 'false'
     $tenantValueNotSet = ($null -eq $tenantValue -or $tenantValue -eq "") -and 'false' -notlike '*$null*'
 
